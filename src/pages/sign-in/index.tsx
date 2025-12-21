@@ -1,10 +1,12 @@
+import { NavLink, useNavigate } from "react-router";
+import supabase from "@/lib/supabase";
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button, Form, Input } from "@/components/ui";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { NavLink } from "react-router";
+import { Button, Form, Input, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui";
+import { toast } from "sonner";
 
 const formSchema = z.object({
 	email: z.email({
@@ -16,6 +18,7 @@ const formSchema = z.object({
 })
 
 export default function SignIn() {
+	const navigate = useNavigate();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -25,8 +28,28 @@ export default function SignIn() {
 		},
 	})
 
-	const onSubmit = () => {
-		console.log("Login!!!");
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		
+		try {
+			const { data, error } = await supabase.auth.signInWithPassword({
+				email: values.email,
+				password: values.password
+			});
+
+			if(error){
+				toast.error(error.message);
+				return;
+			}
+
+			if(data){
+				toast.success("로그인을 성공하였습니다.");
+				navigate("/");
+			}
+
+		} catch (error) {
+			console.log(error);
+			throw new Error(`${error}`);
+		}
 	};
 
 	return (
@@ -73,7 +96,7 @@ export default function SignIn() {
 									<FormItem>
 										<FormLabel>비밀번호</FormLabel>
 										<FormControl>
-											<Input placeholder="비밀번호를 입력하세요." {...field} />
+											<Input type="password" placeholder="비밀번호를 입력하세요." {...field} />
 										</FormControl>
 										<FormMessage className="text-xs" />
 									</FormItem>
@@ -84,7 +107,7 @@ export default function SignIn() {
 									로그인
 								</Button>
 								<div className="text-center">계정이 없으신가요?
-									<NavLink to={"sign-up"} className="underline ml-1">회원가입</NavLink>
+									<NavLink to={"/sign-up"} className="underline ml-1">회원가입</NavLink>
 								</div>
 							</div>
 						</form>

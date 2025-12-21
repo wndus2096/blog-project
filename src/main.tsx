@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { ThemeProvider } from './components/theme-provider'
+import { Toaster } from './components/ui/sonner'
 
 import RootLayout from './pages/layout'
 import App from './pages'
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
 					</Route>
 				</Routes>
 			</BrowserRouter>
+			<Toaster richColors position='top-center'/>
 		</ThemeProvider>
 	</StrictMode>
 )

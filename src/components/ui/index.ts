@@ -4,4 +4,5 @@ export { Button, buttonVariants } from "./button";
 export { Label } from "./label";
 export { Input } from "./input";
 export { Select } from "./select";
-export { Form } from "./form";
+export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from "./form";
+export { Checkbox } from "./checkbox";
