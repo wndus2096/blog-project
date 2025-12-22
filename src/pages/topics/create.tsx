@@ -1,3 +1,4 @@
+import { AppEditor } from "@/components/common";
 import { Button, Input, Label, Select, Skeleton } from "@/components/ui";
 import { SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TOPIC_CATEGORY } from "@/constants/category.constant";
@@ -37,7 +38,7 @@ export default function CreateTopic() {
 						<Asterisk size={14} className="text-[#F96859]" />
 						<Label className="text-muted-foreground">본문</Label>
 					</div>
-					<Skeleton className="w-full h-100" />
+					<AppEditor />
 				</div>
 			</section>
 			{/* 썸네일 등록 */}

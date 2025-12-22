@@ -145,3 +145,7 @@
     flex: 1;
   }
 }
+
+.bn-editor {
+	background-color: transparent !important;
+}
